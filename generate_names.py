@@ -2,7 +2,7 @@
 # -*- mode: python; coding: utf-8 -*-
 # By HarJIT in 2020. MIT/Expat licence.
 
-import ast, os, xml.dom.minidom, unicodedata, shutil
+import ast, os, xml.dom.minidom, unicodedata, shutil, glob
 
 cldrnames = {}
 _document = xml.dom.minidom.parse("CLDR/annotations/en.xml")
@@ -56,6 +56,7 @@ sumps = {
 total_present = []
 total_wanted = []
 
+# TODO FIX THIS BIT
 for i in dat:
     for key in ("UCS.Standard", "UCS.PUA.SoftBank", "UCS.PUA.Google", "UCS.PUA.au.web", "UCS.PUA.DoCoMo"):
         if key in dat[i]:
@@ -83,11 +84,12 @@ for i in sumps:
 print("Overall: {:d} present, {:d} wanted".format(len(total_present), len(total_wanted)))
 
 print("Sorting out names")
-for i in os.listdir("svg"):
+for pn in glob.glob("**/*.svg", recursive=True):
+    i = os.path.basename(pn)
     if "draft" in i.casefold():
         continue
-    ucs = "".join(chr(int(j, 16)) for j in os.path.splitext(i)[0].split("-"))
-    document = xml.dom.minidom.parse(os.path.join("svg", i))
+    ucs = "".join(chr(int(j, 16)) for j in os.path.splitext(i)[0].replace("-BW", "").split("-"))
+    document = xml.dom.minidom.parse(pn)
     cldrname = get_cldrname(ucs)
     if cldrname:
         if not document.getElementsByTagName("title"):
@@ -111,11 +113,11 @@ for i in os.listdir("svg"):
             print(comment)
             if title.lastChild.nodeName != "#comment": # i.e. if not already added.
                 title.appendChild(document.createComment(comment))
-        shutil.move(os.path.join("svg", i), os.path.join("svg", i) + "~")
-        with open(os.path.join("svg", i), "w") as f:
+        shutil.move(pn, pn + "~")
+        with open(pn, "w") as f:
             x = document.toxml().replace("<?xml version=\"1.0\" ?>", "")
             f.write(x)
-            os.unlink(os.path.join("svg", i) + "~")
+            os.unlink(pn + "~")
 
 
 
