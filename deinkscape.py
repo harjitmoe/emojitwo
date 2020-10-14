@@ -120,7 +120,7 @@ for pn in glob.glob("**/*.svg", recursive=True):
         shutil.move(pn, pn + "~")
         with open(pn, "w") as f:
             x = document.toxml().replace("<?xml version=\"1.0\" ?>", "")
-            f.write("".join(needlessline.split(x))
+            f.write("".join(needlessline.split(x)))
             os.unlink(pn + "~")
 
 
