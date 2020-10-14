@@ -56,13 +56,14 @@ sumps = {
 total_present = []
 total_wanted = []
 
-# TODO FIX THIS BIT
+exists = [os.path.basename(pn) for pn in glob.glob("**/*.svg", recursive=True)]
+
 for i in dat:
     for key in ("UCS.Standard", "UCS.PUA.SoftBank", "UCS.PUA.Google", "UCS.PUA.au.web", "UCS.PUA.DoCoMo"):
         if key in dat[i]:
             j = dat[i][key].replace("\u200d", "").replace("\ufe0f", "")
-            k = "svg/{}.svg".format("-".join("{:04x}".format(ord(m)) for m in j))
-            if os.path.exists(k):
+            k = "{}.svg".format("-".join("{:04x}".format(ord(m)) for m in j))
+            if k in exists:
                 for m in sumps:
                     if m in dat[i]:
                         sumps[m][0].append(dat[i]) # present
@@ -70,7 +71,7 @@ for i in dat:
                 break
     else: # i.e. didn't encounter break
         j = i.replace("\u200d", "").replace("\ufe0f", "")
-        k = "svg/{}.svg".format("-".join("{:04x}".format(ord(m)) for m in j))
+        k = "{}.svg".format("-".join("{:04x}".format(ord(m)) for m in j))
         print(k, i)
         for m in sumps:
             if m in dat[i]:
