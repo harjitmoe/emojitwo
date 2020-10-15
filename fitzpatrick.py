@@ -2,7 +2,7 @@
 # -*- mode: python; coding: utf-8 -*-
 # By HarJIT in 2020. MIT/Expat licence.
 
-import os, shutil
+import os, shutil, glob
 
 preexisting = (0x261e, 0x261f, 0x1f6b5, 0x1f6b6, 0x1f6c0, 0x1f918, 0x1f919, 0x1f91a, 0x1f385, 0x1f3c3, 0x1f3c4, 0x1f3c7, 0x1f3ca, 0x1f3cb, 0x1f449, 0x1f44a, 0x1f44b, 0x1f44c, 0x1f44d, 0x1f44e, 0x1f44f, 0x1f450, 0x1f466, 0x1f467, 0x1f468, 0x1f469, 0x1f472, 0x1f473, 0x1f474, 0x1f475, 0x1f476, 0x1f477, 0x1f478, 0x1f47c, 0x1f481, 0x1f482, 0x1f483, 0x1f485, 0x1f486, 0x1f487, 0x1f4aa, 0x1f46e, 0x1f470, 0x1f6b4, 0x261c, 0x261d, 0x270a, 0x270b, 0x270c, 0x1f91b, 0x1f91c, 0x1f91d, 0x1f91e, 0x1f471, 0x1f6a3, 0x270d, 0x1f575, 0x1f58e, 0x1f590, 0x1f595, 0x1f596, 0x1f597, 0x1f645, 0x1f646, 0x1f647, 0x1f64b, 0x1f64c, 0x1f64d, 0x1f64e, 0x1f64f, 0x1f57a, 0x26f9, 0x1f442, 0x1f443, 0x1f446, 0x1f447, 0x1f448, 0x1f934, 0x1f935, 0x1f936, 0x1f938, 0x1f939, 0x1f93b, 0x1f93c, 0x1f93d, 0x1f926, 0x1f930, 0x1f933, 0x1f93e, 0x1f937)
 
@@ -51,14 +51,15 @@ for n, i in enumerate(skin):
     ar, ag, ab = (sr + ara) // 2, (sg + aga) // 2, (sb + aba) // 2
     accent.append(f"#{ar:02x}{ag:02x}{ab:02x}")
 
-for i in os.listdir("svg"):
-    if "draft" in i:
+for pn in glob.glob("**/*.svg", recursive=True):
+    i = os.path.basename(pn)
+    if "draft" in i.casefold():
         continue
     if int(i.split("-", 1)[0].split(".", 1)[0], 16) in list(range(0x1F1E6, 0x1F200)) + [0x1F3F3, 0x1F3F4]:
         continue # Don't mess around with flags
     if int(i.split("-", 1)[0].split(".", 1)[0], 16) in preexisting:
         continue # Already dealt with prior to this script's creation
-    with open(os.path.join("svg", i), "r") as f:
+    with open(pn, "r") as f:
         b = f.read()
     if "#ffdd67" in b and "-" not in i:
         for mno, modifier in list(enumerate(modifiers))[1:]:
@@ -73,7 +74,7 @@ for i in os.listdir("svg"):
             mod = mod.replace(keycol[0], keycol[mno])
             mod = mod.replace(keycol2[0], keycol2[mno])
             mod = mod.replace(accent[0], accent[mno])
-            ofn = os.path.join("svg", i).replace(".svg", f"-{modifier:04x}.svg")
+            ofn = pn.replace(".svg", f"-{modifier:04x}.svg")
             print("Writing", ofn)
             with open(ofn, "w") as f:
                 f.write(mod)
