@@ -126,21 +126,45 @@ while (len(prunable) + len(protected)) > 128: # reminder: we're rendering down f
         prunable.pop(0)
 
 print("Previewing")
+pal = sorted(list(itertools.chain(protected, prunable)))
 palout = Image.new("RGB", (16, 8))
-for n, i in enumerate(sorted(list(itertools.chain(protected, prunable)))):
+for n, i in enumerate(pal):
     x, y = n % 16, n // 16
     r, g, b = unpack(i)
     palout.putpixel((x, y), (r, g, b))
 palout.save("emojitwopal.png")
 
 print("Enforcing")
+# Note that using the pruned dict for everything isn't necessarily good: an individual emoji might
+#   not use two colours contrastively just because they're used contrastively *somewhere*, so it
+#   is often possible to do better than that.
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
     if "draft" in i.casefold():
         continue
     with open(pn) as f:
         b = borig = f.read()
-    for frm, to in pruned.items():
+    cols = set(list(getcols(b)))
+    maps = {}
+    rmaps = collection.defaultdict(set)
+    for col in cols:
+        mapped = sorted(pal, key = lambda j: distance(j, col))[0]
+        maps[col] = mapped
+        rmaps[mapped] |= {col}
+    while len(rmaps) < len(maps): # While we have a collision
+        for mapped in rmaps:
+            if len(rmaps[mapped]) < 2:
+                continue
+            options = []
+            for col in rmaps[mapped]:
+                alternative = sorted([i for i in pal if i not in rmaps],
+                    key = lambda j: distance(j, col))[0]
+                options.append((col, alternative))
+            col, alternative = sorted(options, key=lambda a: distance(a[0], a[1]))[0]
+            maps[col] = alternative
+            rmaps[alternative] |= {col}
+            rmaps[mapped] ^= {col}
+    for frm, to in maps.items():
         b = to.join(re.compile(frm, flags=re.I).split(b))
     if b != borig:
         print(pn)
