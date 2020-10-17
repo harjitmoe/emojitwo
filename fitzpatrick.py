@@ -13,43 +13,12 @@ shadow = ("#eba352", "#e6b796", "#e0a372", "#b58360", "#935e3e", "#705041")
 hair   = ("#ffb300", "#594640", "#dbb471", "#594640", "#231f20", "#231f20")
 lips   = ("#f09985", "#e08672", "#e08672", "#b58360", "#935e3e", "#7d5442")
 lshad  = ("#d47f6c", "#b86e5d", "#b86e5d", "#805c44", "#734c31", "#5c3f34")
-
-cra, cga, cba = (0xFF, 0x05, 0x97) # i.e. avgs with s to get c
-cheeks = []
-for n, i in enumerate(skin):
-    sr, sg, sb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    cr, cg, cb = (sr + cra) // 2, (sg + cga) // 2, (sb + cba) // 2
-    cheeks.append(f"#{cr:02x}{cg:02x}{cb:02x}")
-csra, csga, csba = (0xD9, 0x0F, 0x86) # i.e. avgs with ss to get cs
-cshad = []
-for n, i in enumerate(shadow):
-    ssr, ssg, ssb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    csr, csg, csb = (ssr + csra) // 2, (ssg + csga) // 2, (ssb + csba) // 2
-    cshad.append(f"#{csr:02x}{csg:02x}{csb:02x}")
-bra, bga, bba = (0x23, 0x0D, -0x1F) # i.e. avgs with s to get b
-brow = []
-for n, i in enumerate(skin):
-    sr, sg, sb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    br, bg, bb = (sr + bra) // 2, (sg + bga) // 2, (sb + bba) // 2
-    brow.append(f"#{br:02x}{bg:02x}{bb:02x}")
-kra, kga, kba = (-0x1F, -0x07, -0x04) # i.e. avgs with ss to get k
-keycol = []
-for n, i in enumerate(shadow):
-    ssr, ssg, ssb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    kr, kg, kb = (ssr + kra) // 2, (ssg + kga) // 2, (ssb + kba) // 2
-    keycol.append(f"#{kr:02x}{kg:02x}{kb:02x}")
-k2ra, k2ga, k2ba = (0x3B, 0x41, 0x1C) # i.e. avgs with ss to get k2
-keycol2 = []
-for n, i in enumerate(shadow):
-    ssr, ssg, ssb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    k2r, k2g, k2b = (ssr + k2ra) // 2, (ssg + k2ga) // 2, (ssb + k2ba) // 2
-    keycol2.append(f"#{k2r:02x}{k2g:02x}{k2b:02x}")
-ara, aga, aba = (0xB1, 0x75, 0x1B) # i.e. avgs with s to get a
-accent = []
-for n, i in enumerate(skin):
-    sr, sg, sb = int(i[1:3], 16), int(i[3:5], 16), int(i[5:7], 16)
-    ar, ag, ab = (sr + ara) // 2, (sg + aga) // 2, (sb + aba) // 2
-    accent.append(f"#{ar:02x}{ag:02x}{ab:02x}")
+cheeks = ("#ff717f", "#ff73aa", "#fe6aa1", "#ea5589", "#d94176", "#c43678")
+cshad  = ("#ea5589", "#df638e", "#dc597c", "#c74973", "#b63662", "#a42f63")
+brow   = ("#917524", "#91774f", "#906e46", "#7c592e", "#6b451b", "#563a1d")
+keycol = ("#664e27", "#635849", "#604e37", "#4b3e2e", "#3a2b1d", "#28241e")
+keycl2 = ("#937237", "#91774f", "#947151", "#7c592e", "#664e27", "#574137")
+accent = ("#eda454", "#e0a372", "#e0a372", "#b58360", "#91774f", "#947151")
 
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
@@ -72,7 +41,7 @@ for pn in glob.glob("**/*.svg", recursive=True):
             mod = mod.replace(cshad[0], cshad[mno])
             mod = mod.replace(brow[0], brow[mno])
             mod = mod.replace(keycol[0], keycol[mno])
-            mod = mod.replace(keycol2[0], keycol2[mno])
+            mod = mod.replace(keycl2[0], keycl2[mno])
             mod = mod.replace(accent[0], accent[mno])
             ofn = pn.replace(".svg", f"-{modifier:04x}.svg")
             print("Writing", ofn)
