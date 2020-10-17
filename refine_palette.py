@@ -34,6 +34,22 @@ def distance(hexcol, hexcol2):
     distance **= 0.5
     return distance
 
+def _do_split(inpt, pattern):
+    if isinstance(pattern, str):
+        return inpt.split(pattern)
+    return pattern.split(inpt)
+
+def simulreplace(b, *args):
+    if not args:
+        return b
+    frm, to = args[0]
+    if isinstance(frm, tuple):
+        if len(frm) == 1:
+            frm, = frm
+        else:
+            return to.join(simulreplace(i, (frm[1:], to), *args[1:]) for i in _do_split(b, frm[0]))
+    return to.join(simulreplace(i, *args[1:]) for i in _do_split(b, frm))
+
 # Obtain the complete set of colours used anywhere in EmojiTwo
 print("Scanning")
 togethers = []
@@ -165,8 +181,10 @@ for pn in glob.glob("**/*.svg", recursive=True):
             rmaps[alternative] |= {col}
             rmaps[mapped] ^= {col}
             break # i.e. re-start for loop with modified rmaps dict
+    replacements = []
     for frm, to in maps.items():
-        b = to.join(re.compile(frm, flags=re.I).split(b))
+        replacements.append((re.compile(frm, flags=re.I), to))
+    b = simulreplace(b, *replacements)
     if b != borig:
         print(pn)
         with open(pn, "w") as f:

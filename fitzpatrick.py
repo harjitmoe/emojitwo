@@ -17,14 +17,19 @@ cheeks = ("#ff717f", "#ff73aa", "#fe6aa1", "#ea5589", "#d94176", "#c43678")
 cshad  = ("#ea5589", "#df638e", "#dc597c", "#c74973", "#b63662", "#a42f63")
 brow   = ("#917524", "#91774f", "#906e46", "#7c592e", "#6b451b", "#563a1d")
 keycol = ("#664e27", "#635849", "#604e37", "#4b3e2e", "#3a2b1d", "#28241e")
-keycl2 = ("#937237", "#91774f", "#947151", "#7c592e", "#664e27", "#574137")
-accent = (("#d6a57c"
+keycl2 = ("#937237", "#91774f", "#947151", "#7c592e", "#664e27", "#594640")
+accent = (("#d6a57c",
          "#d8a941"), "#e0a372", "#e0a372", "#b58360", "#8a6859", "#947151")
 
 def simulreplace(b, *args):
     if not args:
         return b
     frm, to = args[0]
+    if isinstance(frm, tuple):
+        if len(frm) == 1:
+            frm, = frm
+        else:
+            return to.join(simulreplace(i, (frm[1:], to), *args[1:]) for i in b.split(frm[0]))
     return to.join(simulreplace(i, *args[1:]) for i in b.split(frm))
 
 for pn in glob.glob("**/*.svg", recursive=True):
