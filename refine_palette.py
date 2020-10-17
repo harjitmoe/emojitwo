@@ -146,7 +146,7 @@ for pn in glob.glob("**/*.svg", recursive=True):
         b = borig = f.read()
     cols = set(list(getcols(b)))
     maps = {}
-    rmaps = collection.defaultdict(set)
+    rmaps = collections.defaultdict(set)
     for col in cols:
         mapped = sorted(pal, key = lambda j: distance(j, col))[0]
         maps[col] = mapped
@@ -164,6 +164,7 @@ for pn in glob.glob("**/*.svg", recursive=True):
             maps[col] = alternative
             rmaps[alternative] |= {col}
             rmaps[mapped] ^= {col}
+            break # i.e. re-start for loop with modified rmaps dict
     for frm, to in maps.items():
         b = to.join(re.compile(frm, flags=re.I).split(b))
     if b != borig:

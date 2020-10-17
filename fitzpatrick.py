@@ -18,7 +18,14 @@ cshad  = ("#ea5589", "#df638e", "#dc597c", "#c74973", "#b63662", "#a42f63")
 brow   = ("#917524", "#91774f", "#906e46", "#7c592e", "#6b451b", "#563a1d")
 keycol = ("#664e27", "#635849", "#604e37", "#4b3e2e", "#3a2b1d", "#28241e")
 keycl2 = ("#937237", "#91774f", "#947151", "#7c592e", "#664e27", "#574137")
-accent = ("#eda454", "#e0a372", "#e0a372", "#b58360", "#91774f", "#947151")
+accent = (("#d6a57c"
+         "#d8a941"), "#e0a372", "#e0a372", "#b58360", "#8a6859", "#947151")
+
+def simulreplace(b, *args):
+    if not args:
+        return b
+    frm, to = args[0]
+    return to.join(simulreplace(i, *args[1:]) for i in b.split(frm))
 
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
@@ -32,17 +39,17 @@ for pn in glob.glob("**/*.svg", recursive=True):
         b = f.read()
     if "#ffdd67" in b and "-" not in i:
         for mno, modifier in list(enumerate(modifiers))[1:]:
-            mod = b.replace(skin[0], skin[mno])
-            mod = mod.replace(shadow[0], shadow[mno])
-            mod = mod.replace(hair[0], hair[mno])
-            mod = mod.replace(lips[0], lips[mno])
-            mod = mod.replace(lshad[0], lshad[mno])
-            mod = mod.replace(cheeks[0], cheeks[mno])
-            mod = mod.replace(cshad[0], cshad[mno])
-            mod = mod.replace(brow[0], brow[mno])
-            mod = mod.replace(keycol[0], keycol[mno])
-            mod = mod.replace(keycl2[0], keycl2[mno])
-            mod = mod.replace(accent[0], accent[mno])
+            mod = simulreplace(b, (skin[0], skin[mno]),
+                                  (shadow[0], shadow[mno]),
+                                  (hair[0], hair[mno]),
+                                  (lips[0], lips[mno]),
+                                  (lshad[0], lshad[mno]),
+                                  (cheeks[0], cheeks[mno]),
+                                  (cshad[0], cshad[mno]),
+                                  (brow[0], brow[mno]),
+                                  (keycol[0], keycol[mno]),
+                                  (keycl2[0], keycl2[mno]),
+                                  (accent[0], accent[mno]))
             ofn = pn.replace(".svg", f"-{modifier:04x}.svg")
             print("Writing", ofn)
             with open(ofn, "w") as f:
