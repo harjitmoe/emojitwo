@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <title>nauseated face</title>
     <circle cx="32" cy="32" r="30" fill="#c7e755"/>
-    <g fill="#4d5357">
+    <g fill="#425e21">
         <circle cx="20.5" cy="27" r="4.5"/>
         <circle cx="43.5" cy="27" r="4.5"/>
         <path d="M37.4 43.2H26.6c-.7 0-.7-2.5 0-2.5h10.7c.8 0 .8 2.5.1 2.5"/>

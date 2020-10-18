@@ -14,8 +14,8 @@
     </g>
     <path fill="#666" d="M11 64l19.1-39.3H30L11 61.1z"/>
     <path fill="#3e4347" d="M7 61.1h4V64H7z"/>
-    <path fill="#e8e8e8" d="M29.6 24.7L7 61.1h4l19-36.4z"/>
+    <path fill="#e6e6e6" d="M29.6 24.7L7 61.1h4l19-36.4z"/>
     <path fill="#666" d="M53 64L33.9 24.7h.1l19 36.4z"/>
-    <path fill="#e8e8e8" d="M34.4 24.7L57 61.1h-4L34 24.7z"/>
+    <path fill="#e6e6e6" d="M34.4 24.7L57 61.1h-4L34 24.7z"/>
     <path fill="#3e4347" d="M52.9 61.1h4V64h-4z"/>
 </svg>

@@ -2,9 +2,9 @@
     <title>bus stop</title>
     <path fill="#83bf4f" d="M26 26h4v38h-4z"/>
     <path fill="#42ade2" d="M31 30h19v6H31z"/>
-    <path fill="#e0a372" d="M31 36h19v6H31z"/>
+    <path fill="#fc97b2" d="M31 36h19v6H31z"/>
     <path fill="#42ade2" d="M14 30h11v6H14z"/>
-    <path fill="#e0a372" d="M14 36h11v6H14z"/>
+    <path fill="#fc97b2" d="M14 36h11v6H14z"/>
     <path fill="#42ade2" d="M31 42h19v6H31z"/>
     <g fill="#699635">
         <path d="M26 48h4v2h-4zM25 35h6v2h-6zM25 41h6v2h-6z"/>

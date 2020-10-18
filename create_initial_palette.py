@@ -150,21 +150,20 @@ for n, i in enumerate(pal):
     palout.putpixel((x, y), (r, g, b))
 palout.save("emojitwopal.png")
 
-print("Enforcing")
 # Note that using the pruned dict for everything isn't necessarily good: an individual emoji might
 #   not use two colours contrastively just because they're used contrastively *somewhere*, so it
 #   is often possible to do better than that.
 # Indeed even in cases where the pair are used contrastively, a chain displacement might be
 #   "closer" than the pruned dict's process of matching equal to equal and then falling back, and
 #   doing it like the following allows that to come to pass.
-replacements_done = collections.defaultdict(lambda:collections.defaultdict(list))
+print("Mapping")
+replacements_done = {}
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
     if "draft" in i.casefold():
         continue
     with open(pn) as f:
-        b = borig = f.read()
-    cols = set(list(getcols(b)))
+        cols = set(list(getcols(f.read())))
     maps = {}
     rmaps = collections.defaultdict(set)
     for col in cols:
@@ -187,17 +186,11 @@ for pn in glob.glob("**/*.svg", recursive=True):
             break # i.e. re-start for loop with modified rmaps dict
     replacements = []
     for frm, to in maps.items():
-        replacements_done[frm][to].append(i)
+        replacements_done.setdefault(frm, {}).setdefault(to, []).append(i)
         replacements_done[frm][to].sort()
         replacements.append((re.compile(frm, flags=re.I), to))
-    b = simulreplace(b, *replacements)
-    if b != borig:
-        print(pn)
-        with open(pn, "w") as f:
-            f.write(b)
 
 pprint.repr = json.dumps
-replacements_done = dict(zip(replacements_done.keys(), map(dict, replacements_done.values())))
 with open("colour_replacements.json", "w") as f:
     f.write(pprint.pformat(replacements_done))
 

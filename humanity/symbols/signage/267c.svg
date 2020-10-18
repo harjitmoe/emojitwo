@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <title>Recycled Paper Symbol</title>
-	<circle cx="32" cy="32" r="30" fill="#83bf4f"/><!-- #699635 -->
+	<circle cx="32" cy="32" r="30" fill="#83bf4f"/><!-- #68963b -->
 	<g transform="scale(0.8) translate(8,8)">
 		<path fill="#f5f5f5" d="M16.2 58.1h14.2V41.7H10.3s-.7 5.7-.7 7.7c-.3 8.6 6.6 8.7 6.6 8.7"/>
 		<path fill="#d0d0d0" d="M19.5 34.8l6.5 3.8-8.6-15.2-17.4.1 6.5 3.8-5.2 9C.8 37.2.2 38.7 1 40l8.9 15.3c1.6 2.8 4.4 2.7 6.4 2.7 0 0-9.1-1.9-3.3-11.9l6.5-11.3"/>
