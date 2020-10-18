@@ -158,6 +158,7 @@ palout.save("emojitwopal.png")
 #   doing it like the following allows that to come to pass.
 print("Mapping")
 replacements_done = {}
+skin_tone_base = "#ffdd67"
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
     if "draft" in i.casefold():
@@ -167,7 +168,10 @@ for pn in glob.glob("**/*.svg", recursive=True):
     maps = {}
     rmaps = collections.defaultdict(set)
     for col in cols:
-        mapped = sorted(pal, key = lambda j: distance(j, col))[0]
+        candidates = sorted(pal, key = lambda j: distance(j, col))
+        mapped = candidates[0]
+        if mapped == skin_tone_base and col != skin_tone_base:
+            mapped = candidates[1]
         maps[col] = mapped
         rmaps[mapped] |= {col}
     while len(rmaps) < len(maps): # While we have a collision
@@ -176,9 +180,12 @@ for pn in glob.glob("**/*.svg", recursive=True):
                 continue
             options = []
             for col in rmaps[mapped]:
-                alternative = sorted([i for i in pal if i not in rmaps],
-                    key = lambda j: distance(j, col))[0]
-                options.append((col, alternative))
+                alternative_candidates = sorted([j for j in pal if j not in rmaps],
+                    key = lambda j: distance(j, col))
+                if alternative_candidates[0] != skin_tone_base:
+                    options.append((col, alternative_candidates[0]))
+                else:
+                    options.append((col, alternative_candidates[1]))
             col, alternative = sorted(options, key=lambda a: distance(a[0], a[1]))[0]
             maps[col] = alternative
             rmaps[alternative] |= {col}

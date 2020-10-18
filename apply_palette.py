@@ -94,12 +94,23 @@ elif mode == "reverse":
     print("Reversing palette transform")
     apply(rby_filename)
 
-print("Creating simplified palette file")
+print("Creating contextual palette files")
+simple_replacements = {}
+complex_replacements_one = {}
+complex_replacements_two = {}
 for source in colour_replacements.copy():
     if source in simples:
-        colour_replacements[source] = next(iter(colour_replacements[source]))
-with open("colour_replacements_oneway.json", "w") as f:
-    f.write(pprint.pformat(colour_replacements))
+        simple_replacements[source] = next(iter(colour_replacements[source]))
+    elif source in complex_first_level:
+        complex_replacements_one[source] = colour_replacements[source]
+    else:
+        complex_replacements_two[source] = colour_replacements[source]
+with open("colour_replacements_simple.json", "w") as f:
+    f.write(pprint.pformat(simple_replacements))
+with open("colour_replacements_complex1.json", "w") as f:
+    f.write(pprint.pformat(complex_replacements_one))
+with open("colour_replacements_complex2.json", "w") as f:
+    f.write(pprint.pformat(complex_replacements_two))
 
 
 
