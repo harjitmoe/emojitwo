@@ -154,6 +154,9 @@ print("Enforcing")
 # Note that using the pruned dict for everything isn't necessarily good: an individual emoji might
 #   not use two colours contrastively just because they're used contrastively *somewhere*, so it
 #   is often possible to do better than that.
+# Indeed even in cases where the pair are used contrastively, a chain displacement might be
+#   "closer" than the pruned dict's process of matching equal to equal and then falling back, and
+#   doing it like the following allows that to come to pass.
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
     if "draft" in i.casefold():

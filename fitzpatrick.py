@@ -10,9 +10,11 @@ preexisting = (0x261e, 0x261f, 0x1f6b5, 0x1f6b6, 0x1f6c0, 0x1f918, 0x1f919, 0x1f
 modifiers = (None, 0x1F3FB, 0x1F3FC, 0x1F3FD, 0x1F3FE, 0x1F3FF)
 skin   = ("#ffdd67", "#ffe1bd", "#fed0ac", "#d6a57c", "#b47d56", "#8a6859")
 shadow = ("#eba352", "#e6b796", "#e0a372", "#b58360", "#935e3e", "#705041")
-hair   = ("#ffb300", "#594640", "#dbb471", "#594640", "#231f20", "#231f20")
+hair   = (("#ffb300",
+         "#ffbc00"), "#594640", "#dbb471", "#594640", "#231f20", "#231f20")
 lips   = ("#f09985", "#e08672", "#e08672", "#b58360", "#935e3e", "#7d5442")
-lshad  = ("#d47f6c", "#b86e5d", "#b86e5d", "#805c44", "#734c31", "#5c3f34")
+lshad  = (("#d47f6c",
+         "#e2596c"), "#b86e5d", "#b86e5d", "#805c44", "#734c31", "#5c3f34")
 cheeks = ("#ff717f", "#ff73aa", "#fe6aa1", "#ea5589", "#d94176", "#c43678")
 cshad  = ("#ea5589", "#df638e", "#dc597c", "#c74973", "#b63662", "#a42f63")
 brow   = ("#917524", "#91774f", "#906e46", "#7c592e", "#6b451b", "#563a1d")
@@ -33,6 +35,8 @@ def simulreplace(b, *args):
     return to.join(simulreplace(i, *args[1:]) for i in b.split(frm))
 
 for pn in glob.glob("**/*.svg", recursive=True):
+    if "node_modules" in pn or "other" in pn or "sprites" in pn:
+        continue
     i = os.path.basename(pn)
     if "draft" in i.casefold():
         continue
