@@ -2,7 +2,7 @@
 # -*- mode: python; coding: utf-8 -*-
 # By HarJIT in 2020. MIT/Expat licence.
 
-import os, xml.dom.minidom, unicodedata, shutil, glob, re, collections, itertools
+import os, xml.dom.minidom, unicodedata, shutil, glob, re, collections, itertools, pprint, json
 from PIL import Image
 
 colours = collections.defaultdict(int)
@@ -157,6 +157,7 @@ print("Enforcing")
 # Indeed even in cases where the pair are used contrastively, a chain displacement might be
 #   "closer" than the pruned dict's process of matching equal to equal and then falling back, and
 #   doing it like the following allows that to come to pass.
+replacements_done = collections.defaultdict(lambda:collections.defaultdict(list))
 for pn in glob.glob("**/*.svg", recursive=True):
     i = os.path.basename(pn)
     if "draft" in i.casefold():
@@ -186,6 +187,8 @@ for pn in glob.glob("**/*.svg", recursive=True):
             break # i.e. re-start for loop with modified rmaps dict
     replacements = []
     for frm, to in maps.items():
+        replacements_done[frm][to].append(i)
+        replacements_done[frm][to].sort()
         replacements.append((re.compile(frm, flags=re.I), to))
     b = simulreplace(b, *replacements)
     if b != borig:
@@ -193,6 +196,9 @@ for pn in glob.glob("**/*.svg", recursive=True):
         with open(pn, "w") as f:
             f.write(b)
 
-
+pprint.repr = json.dumps
+replacements_done = dict(zip(replacements_done.keys(), map(dict, replacements_done.values())))
+with open("colour_replacements.json", "w") as f:
+    f.write(pprint.pformat(replacements_done))
 
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <title>Optical Disc Icon</title>
-    <circle cx="32" cy="32" r="30" fill="#29abe2"/>
+    <circle cx="32" cy="32" r="30" fill="#29b6f6"/>
     <g fill="#b4d7ee">
         <circle cx="32" cy="32" r="6.6"/>
         <path d="M32.2 42.6l9.2 13.6c6.8-2.6 12.2-8 14.8-14.8l-13.6-9.2c-.1 5.7-4.7 10.3-10.4 10.4M31.8 21.4L22.6 7.8c-6.8 2.6-12.2 8-14.8 14.8l13.6 9.2c.1-5.7 4.7-10.3 10.4-10.4"/>

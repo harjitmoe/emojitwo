@@ -5,10 +5,10 @@
     <path fill="#d6eef0" d="M6 42h14v18H6z"/>
     <path fill="#3e4347" d="M2 27h60v6H2z"/>
     <path fill="#83bf4f" d="M0 27c0 2.2 1.8 4 4 4s4-1.8 4-4H0"/>
-    <path fill="#d33b23" d="M8 27c0 2.2 1.8 4 4 4s4-1.8 4-4H8"/>
+    <path fill="#c94747" d="M8 27c0 2.2 1.8 4 4 4s4-1.8 4-4H8"/>
     <path fill="#83bf4f" d="M16 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
     <path fill="#c7e755" d="M16 18h8v9h-8z"/>
-    <path fill="#d33b23" d="M24 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
+    <path fill="#c94747" d="M24 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
     <path fill="#f15744" d="M24 18h8v9h-8z"/>
     <path fill="#c7e755" d="M0 18h8v9H0z"/>
     <path fill="#f15744" d="M8 18h8v9H8z"/>
@@ -16,10 +16,10 @@
     <path fill="#f15744" d="M56 18h8v9h-8z"/>
     <path fill="#83bf4f" d="M32 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
     <path fill="#c7e755" d="M32 18h8v9h-8z"/>
-    <path fill="#d33b23" d="M40 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
+    <path fill="#c94747" d="M40 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
     <path fill="#f15744" d="M40 18h8v9h-8z"/>
     <path fill="#83bf4f" d="M48 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
-    <path fill="#d33b23" d="M56 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
+    <path fill="#c94747" d="M56 27c0 2.2 1.8 4 4 4s4-1.8 4-4h-8"/>
     <path fill="#fff" d="M13 33c-5 0-9 4-9 9h18c0-5-4-9-9-9"/>
     <path fill="#62727a" d="M6.3 40h13.4c-.9-2.9-3.5-5-6.7-5s-5.8 2.1-6.7 5"/>
     <g fill="#fff">
